@@ -29,7 +29,7 @@ class UnpinForumTopic:
     ) -> bool:
         """Unpin a forum topic.
 
-        .. include:: /_includes/usable-by/users-bots.rst
+        .. include:: /_includes/usable-by/users.rst
 
         Parameters:
             chat_id (``int`` | ``str``):
