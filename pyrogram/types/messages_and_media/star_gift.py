@@ -139,7 +139,7 @@ class StarGift(Object):
         doc = user_star_gift.gift.sticker
         attributes = {type(i): i for i in doc.attributes}
 
-        message, entities = (
+        caption, caption_entities = (
             utils.parse_text_with_entities(
                 client, getattr(user_star_gift, "message", None), users
             )
@@ -158,8 +158,8 @@ class StarGift(Object):
             is_saved=not user_star_gift.unsaved if getattr(user_star_gift, "unsaved", None) else None,
             from_user=types.User._parse(client, users.get(user_star_gift.from_id)) if getattr(user_star_gift, "from_id", None) else None,
             message_id=getattr(user_star_gift, "msg_id", None),
-            caption=message,
-            caption_entities=entities,
+            caption=caption,
+            caption_entities=caption_entities,
             client=client
         )
 
@@ -174,7 +174,7 @@ class StarGift(Object):
         doc = action.gift.sticker
         attributes = {type(i): i for i in doc.attributes}
 
-        message, entities = (
+        caption, caption_entities = (
             utils.parse_text_with_entities(
                 client, getattr(action, "message", None), users
             )
@@ -193,8 +193,8 @@ class StarGift(Object):
             is_saved=getattr(action, "saved", None),
             from_user=types.User._parse(client, users.get(utils.get_raw_peer_id(message.peer_id))),
             message_id=message.id,
-            caption=message,
-            caption_entities=entities,
+            caption=caption,
+            caption_entities=caption_entities,
             client=client
         )
 
