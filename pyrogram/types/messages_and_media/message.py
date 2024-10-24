@@ -146,9 +146,8 @@ class Message(Object, Update):
         paid_media (:obj:`~pyrogram.types.PaidMediaInfo`, *optional*):
             The message is a paid media message.
 
-        show_above_text (``bool``, *optional*):
-            If True, link preview will be shown above the message text.
-            Otherwise, the link preview will be shown below the message text.
+        show_caption_above_media (``bool``, *optional*):
+            If True, caption must be shown above the message media.
 
         edit_date (:py:obj:`~datetime.datetime`, *optional*):
             Date the message was last edited.
@@ -447,7 +446,7 @@ class Message(Object, Update):
         from_scheduled: bool = None,
         media: "enums.MessageMediaType" = None,
         paid_media: "types.PaidMediaInfo" = None,
-        show_above_text: bool = None,
+        show_caption_above_media: bool = None,
         edit_date: datetime = None,
         edit_hidden: bool = None,
         media_group_id: int = None,
@@ -559,7 +558,7 @@ class Message(Object, Update):
         self.from_scheduled = from_scheduled
         self.media = media
         self.paid_media = paid_media
-        self.show_above_text = show_above_text
+        self.show_caption_above_media = show_caption_above_media
         self.edit_date = edit_date
         self.edit_hidden = edit_hidden
         self.media_group_id = media_group_id
@@ -1133,7 +1132,7 @@ class Message(Object, Update):
                 from_scheduled=message.from_scheduled,
                 media=media_type,
                 paid_media=paid_media,
-                show_above_text=getattr(message, "invert_media", None),
+                show_caption_above_media=getattr(message, "invert_media", None),
                 edit_date=utils.timestamp_to_datetime(message.edit_date),
                 edit_hidden=message.edit_hide,
                 media_group_id=message.grouped_id,
@@ -1305,7 +1304,7 @@ class Message(Object, Update):
         disable_notification: bool = None,
         message_thread_id: int = None,
         effect_id: int = None,
-        show_above_text: bool = None,
+        show_caption_above_media: bool = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         quote_entities: List["types.MessageEntity"] = None,
@@ -1364,9 +1363,8 @@ class Message(Object, Update):
                 Unique identifier of the message effect.
                 For private chats only.
 
-            show_above_text (``bool``, *optional*):
-                If True, link preview will be shown above the message text.
-                Otherwise, the link preview will be shown below the message text.
+            show_caption_above_media (``bool``, *optional*):
+                Pass True, if the caption must be shown above the message media.
 
             reply_to_message_id (``int``, *optional*):
                 If the message is a reply, ID of the original message.
@@ -1417,7 +1415,7 @@ class Message(Object, Update):
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
             effect_id=effect_id,
-            show_above_text=show_above_text,
+            show_caption_above_media=show_caption_above_media,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             quote_entities=quote_entities,
@@ -3814,7 +3812,7 @@ class Message(Object, Update):
         disable_notification: bool = None,
         message_thread_id: int = None,
         effect_id: int = None,
-        show_above_text: bool = None,
+        show_caption_above_media: bool = None,
         reply_to_message_id: int = None,
         reply_to_chat_id: Union[int, str] = None,
         reply_to_story_id: int = None,
@@ -3870,9 +3868,8 @@ class Message(Object, Update):
                 If True, media in the link preview will be smaller.
                 Ignored if the URL isn't explicitly specified or media size change isn't supported for the preview.
 
-            show_above_text (``bool``, *optional*):
-                If True, link preview will be shown above the message text.
-                Otherwise, the link preview will be shown below the message text.
+            show_caption_above_media (``bool``, *optional*):
+                Pass True, if the caption must be shown above the message media.
 
             disable_notification (``bool``, *optional*):
                 Sends the message silently.
@@ -3943,7 +3940,7 @@ class Message(Object, Update):
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
             effect_id=effect_id,
-            show_above_text=show_above_text,
+            show_caption_above_media=show_caption_above_media,
             reply_to_message_id=reply_to_message_id,
             reply_to_chat_id=reply_to_chat_id,
             reply_to_story_id=reply_to_story_id,
@@ -3962,7 +3959,7 @@ class Message(Object, Update):
         parse_mode: Optional["enums.ParseMode"] = None,
         entities: List["types.MessageEntity"] = None,
         disable_web_page_preview: bool = None,
-        show_above_text: bool = None,
+        show_caption_above_media: bool = None,
         reply_markup: "types.InlineKeyboardMarkup" = None
     ) -> "Message":
         """Bound method *edit_text* of :obj:`~pyrogram.types.Message`.
@@ -3998,9 +3995,8 @@ class Message(Object, Update):
             disable_web_page_preview (``bool``, *optional*):
                 Disables link previews for links in this message.
 
-            show_above_text (``bool``, *optional*):
-                If True, link preview will be shown above the message text.
-                Otherwise, the link preview will be shown below the message text.
+            show_caption_above_media (``bool``, *optional*):
+                Pass True, if the caption must be shown above the message media.
 
             reply_markup (:obj:`~pyrogram.types.InlineKeyboardMarkup`, *optional*):
                 An InlineKeyboardMarkup object.
@@ -4018,7 +4014,7 @@ class Message(Object, Update):
             parse_mode=parse_mode,
             entities=entities,
             disable_web_page_preview=disable_web_page_preview,
-            show_above_text=show_above_text,
+            show_caption_above_media=show_caption_above_media,
             reply_markup=reply_markup
         )
 
