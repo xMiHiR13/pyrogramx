@@ -483,7 +483,6 @@ def pyrogram_api():
             BusinessConnection
             BusinessInfo
             BusinessIntro
-            BusinessMessage
             BusinessRecipients
             BusinessWeeklyOpen
             BusinessWorkingHours
@@ -512,6 +511,7 @@ def pyrogram_api():
         """,
         messages_media="""
         Messages & Media
+            BusinessMessage
             Message
             MessageEntity
             Photo
@@ -533,11 +533,14 @@ def pyrogram_api():
             PollOption
             Dice
             Reaction
+            RefundedPayment
             StarGift
             VideoChatScheduled
             VideoChatStarted
             VideoChatEnded
             VideoChatMembersInvited
+            PhoneCallStarted
+            PhoneCallEnded
             WebAppData
             MessageReactions
             ChatReactions
@@ -545,7 +548,9 @@ def pyrogram_api():
             MyBoost
             BoostsStatus
             Giveaway
-            GiveawayResult
+            GiveawayCreated
+            GiveawayCompleted
+            GiveawayWinners
             Invoice
             GiftCode
             CheckedGiftCode
@@ -554,6 +559,9 @@ def pyrogram_api():
             PaidMediaPreview
             PaymentForm
             ChatBoost
+            ContactRegistered
+            ScreenshotTaken
+            WriteAccessAllowed
         """,
         bot_keyboards="""
         Bot keyboards
@@ -825,7 +833,7 @@ def pyrogram_api():
         """,
         star_gift="""
         StarGift
-            StarGift.save
+            StarGift.show
             StarGift.hide
         """
     )
@@ -868,6 +876,7 @@ def pyrogram_api():
             BusinessSchedule
             ChatAction
             ChatEventAction
+            ChatJoinType
             ChatMemberStatus
             ChatMembersFilter
             ChatType
@@ -878,6 +887,7 @@ def pyrogram_api():
             MessagesFilter
             NextCodeType
             ParseMode
+            PhoneCallDiscardReason
             PollType
             PrivacyKey
             ProfileColor
