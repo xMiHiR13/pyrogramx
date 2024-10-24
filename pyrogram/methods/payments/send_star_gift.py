@@ -45,6 +45,7 @@ class SendStarGift:
 
             star_gift_id (``int``):
                 Unique identifier of star gift.
+                To get all available star gifts use :meth:`~pyrogram.Client.get_star_gifts`.
 
             text (``str``, *optional*):
                 Text of the message to be sent.
