@@ -159,8 +159,8 @@ messageActionChannelMigrateFrom#ea3948e9 title:string chat_id:long = MessageActi
 messageActionPinMessage#94bd38ed = MessageAction;
 messageActionHistoryClear#9fbab604 = MessageAction;
 messageActionGameScore#92a72876 game_id:long score:int = MessageAction;
-messageActionPaymentSentMe#8f31b327 flags:# recurring_init:flags.2?true recurring_used:flags.3?true currency:string total_amount:long payload:bytes info:flags.0?PaymentRequestedInfo shipping_option_id:flags.1?string charge:PaymentCharge = MessageAction;
-messageActionPaymentSent#96163f56 flags:# recurring_init:flags.2?true recurring_used:flags.3?true currency:string total_amount:long invoice_slug:flags.0?string = MessageAction;
+messageActionPaymentSentMe#ffa00ccc flags:# recurring_init:flags.2?true recurring_used:flags.3?true currency:string total_amount:long payload:bytes info:flags.0?PaymentRequestedInfo shipping_option_id:flags.1?string charge:PaymentCharge subscription_until_date:flags.4?int = MessageAction;
+messageActionPaymentSent#c624b16e flags:# recurring_init:flags.2?true recurring_used:flags.3?true currency:string total_amount:long invoice_slug:flags.0?string subscription_until_date:flags.4?int = MessageAction;
 messageActionPhoneCall#80e11a7f flags:# video:flags.2?true call_id:long reason:flags.0?PhoneCallDiscardReason duration:flags.1?int = MessageAction;
 messageActionScreenshotTaken#4792929b = MessageAction;
 messageActionCustomAction#fae69f56 message:string = MessageAction;
@@ -434,7 +434,6 @@ updateBusinessBotCallbackQuery#1ea2fda7 flags:# query_id:long user_id:long conne
 updateStarsRevenueStatus#a584b019 peer:Peer status:StarsRevenueStatus = Update;
 updateBotPurchasedPaidMedia#283bd312 user_id:long payload:string qts:int = Update;
 updatePaidReactionPrivacy#51ca7aec private:Bool = Update;
-updateBotSubscriptionExpire#2d13c6ee user_id:long payload:string invoice_slug:string until_date:int qts:int = Update;
 
 updates.state#a56c2a3e pts:int qts:int date:int seq:int unread_count:int = updates.State;
 
@@ -2473,7 +2472,7 @@ payments.getStarGifts#c4563590 hash:int = payments.StarGifts;
 payments.getUserStarGifts#5e72c7e1 user_id:InputUser offset:string limit:int = payments.UserStarGifts;
 payments.saveStarGift#87acf08e flags:# unsave:flags.0?true user_id:InputUser msg_id:int = Bool;
 payments.convertStarGift#421e027 user_id:InputUser msg_id:int = Bool;
-payments.botCancelStarsSubscription#57f9ece6 flags:# restore:flags.0?true user_id:InputUser invoice_slug:flags.1?string charge_id:flags.2?string = Bool;
+payments.botCancelStarsSubscription#6dfa0622 flags:# restore:flags.0?true user_id:InputUser charge_id:string = Bool;
 
 stickers.createStickerSet#9021ab67 flags:# masks:flags.0?true emojis:flags.5?true text_color:flags.6?true user_id:InputUser title:string short_name:string thumb:flags.2?InputDocument stickers:Vector<InputStickerSetItem> software:flags.3?string = messages.StickerSet;
 stickers.removeStickerFromSet#f7760f51 sticker:InputDocument = messages.StickerSet;
@@ -2593,4 +2592,4 @@ smsjobs.finishJob#4f1ebf24 flags:# job_id:string error:flags.0?string = Bool;
 
 fragment.getCollectibleInfo#be1e85ba collectible:InputCollectible = fragment.CollectibleInfo;
 
-// LAYER 193
+// LAYER 194
