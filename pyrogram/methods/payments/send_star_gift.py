@@ -35,7 +35,7 @@ class SendStarGift:
     ) -> bool:
         """Send star gift.
 
-        .. include:: /_includes/usable-by/users.rst
+        .. include:: /_includes/usable-by/users-bots.rst
 
         Parameters:
             chat_id (``int`` | ``str``):
