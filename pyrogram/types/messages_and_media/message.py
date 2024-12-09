@@ -1097,6 +1097,7 @@ class Message(Object, Update):
                     invoice = types.Invoice._parse(client, media)
                     media_type = enums.MessageMediaType.INVOICE
                 elif isinstance(media, raw.types.MessageMediaStory):
+                    # TODO: refactor story parsing
                     if media.story:
                         story = await types.Story._parse(client, media.story, users, chats, media.peer)
                     elif client.me and not client.me.is_bot:
