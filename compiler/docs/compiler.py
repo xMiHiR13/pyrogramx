@@ -374,6 +374,7 @@ def pyrogram_api():
             get_bot_info_short_description
             set_bot_name
             get_bot_name
+            get_owned_bots
         """,
         business="""
         Business
