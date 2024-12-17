@@ -760,7 +760,8 @@ class Chat(Object):
 
                 await chat.set_title("Lounge")
 
-        Note:
+        .. note::
+
             In regular groups (non-supergroups), this method will only work if the "All Members Are Admins"
             setting is off.
 
@@ -924,7 +925,8 @@ class Chat(Object):
 
                 await chat.ban_member(123456789)
 
-        Note:
+        .. note::
+
             In regular groups (non-supergroups), this method will only work if the "All Members Are Admins" setting is
             off in the target group. Otherwise members may only be removed by the group's creator or by the member
             that added them.
@@ -1099,7 +1101,8 @@ class Chat(Object):
 
                 await chat.join()
 
-        Note:
+        .. note::
+
             This only works for public groups, channels that have set a username or linked chats.
 
         Returns:

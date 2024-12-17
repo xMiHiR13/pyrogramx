@@ -57,7 +57,8 @@ class RawUpdateHandler(Handler):
             You can access extra info about the chat (such as *title*, *participants_count*, etc...)
             by using the IDs you find in the *update* argument (e.g.: *chats[1701277281]*).
 
-    Note:
+    .. note::
+    
         The following Empty or Forbidden types may exist inside the *users* and *chats* dictionaries.
         They mean you have been blocked by the user or banned from the group/channel.
 
