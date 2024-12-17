@@ -226,7 +226,7 @@ class Dispatcher:
             if not self.client.skip_updates:
                 await self.client.recover_gaps()
 
-    async def stop(self):
+    async def stop(self, clear: bool = True):
         if not self.client.no_updates:
             for i in range(self.client.workers):
                 self.updates_queue.put_nowait(None)
@@ -234,8 +234,9 @@ class Dispatcher:
             for i in self.handler_worker_tasks:
                 await i
 
-            self.handler_worker_tasks.clear()
-            self.groups.clear()
+            if clear:
+                self.handler_worker_tasks.clear()
+                self.groups.clear()
 
             log.info("Stopped %s HandlerTasks", self.client.workers)
 
