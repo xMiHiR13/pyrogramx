@@ -428,6 +428,7 @@ def pyrogram_api():
             unpin_chat_stories
             read_chat_stories
             send_story
+            enable_stealth_mode
         """,
         premium="""
         Premium
@@ -511,6 +512,7 @@ def pyrogram_api():
             ChatColor
             FoundContacts
             PrivacyRule
+            StoriesStealthMode
         """,
         messages_media="""
         Messages & Media
