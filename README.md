@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/KurimuzonAkuma/pyrogram">
-        <img src="https://docs.kurigram.xyz/_static/pyrogram.png" alt="Pyrogram" width="128">
+        <img src="https://raw.githubusercontent.com/KurimuzonAkuma/kurigramartwork/master/kurigram-logo.png" alt="Pyrogram" width="128">
     </a>
     <br>
     <b>Telegram MTProto API Framework for Python</b>
@@ -66,11 +66,16 @@ If you'd like to support my fork, you can consider:
 
 ### Installing
 
+Stable version
+
+``` bash
+pip3 install kurigram
+```
+
+Dev version
 ``` bash
 pip3 install https://github.com/KurimuzonAkuma/pyrogram/archive/dev.zip --force-reinstall
 ```
-> [!NOTE]
-> I will release my fork to PyPi soon.
 
 ### Resources
 
