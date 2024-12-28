@@ -208,6 +208,7 @@ def pyrogram_api():
             delete_chat_history
             send_paid_media
             send_paid_reaction
+            add_to_gifs
         """,
         chats="""
         Chats
@@ -845,6 +846,10 @@ def pyrogram_api():
         StarGift
             StarGift.show
             StarGift.hide
+        """,
+        animation="""
+        Animation
+            Animation.add_to_gifs
         """
     )
 
