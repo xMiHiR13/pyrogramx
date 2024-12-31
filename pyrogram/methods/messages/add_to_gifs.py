@@ -36,10 +36,10 @@ class AddToGifs():
 
             unsave (``bool``, optional):
                 Whether to remove the GIF from the list of saved GIFs. Defaults to ``False``.
-        
+
         Returns:
             ``bool``: True on success.
-        
+
         Example:
             .. code-block:: python
 
