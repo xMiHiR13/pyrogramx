@@ -335,6 +335,8 @@ def pyrogram_api():
             send_payment_form
             send_star_gift
             show_star_gift
+            transfer_star_gift
+            upgrade_star_gift
         """,
         phone="""
         Phone
@@ -573,6 +575,7 @@ def pyrogram_api():
             ContactRegistered
             ScreenshotTaken
             WriteAccessAllowed
+            StarGiftAttribute
         """,
         bot_keyboards="""
         Bot keyboards
@@ -911,6 +914,7 @@ def pyrogram_api():
             SentCodeType
             StoriesPrivacyRules
             UserStatus
+            StarGiftAttributeType
         """,
     )
 

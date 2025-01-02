@@ -906,7 +906,7 @@ class Message(Object, Update):
             elif isinstance(action, raw.types.MessageActionBoostApply):
                 boosts_applied = action.boosts
                 service_type = enums.MessageServiceType.BOOST_APPLY
-            elif isinstance(action, raw.types.MessageActionStarGift):
+            elif isinstance(action, (raw.types.MessageActionStarGift, raw.types.MessageActionStarGiftUnique)):
                 star_gift = await types.StarGift._parse_action(client, message, users)
                 service_type = enums.MessageServiceType.STAR_GIFT
             elif isinstance(action, raw.types.MessageActionBotAllowed):
