@@ -57,16 +57,8 @@ class StarGift(Object):
             Collectible number of the star gift.
             For unique gifts only.
 
-        model (:obj:`~pyrogram.types.StarGiftAttribute`, *optional*):
-            Information about the star gift model.
-            For unique gifts only.
-
-        backdrop (:obj:`~pyrogram.types.StarGiftAttribute`, *optional*):
-            Information about the star gift backdrop.
-            For unique gifts only.
-
-        symbol (:obj:`~pyrogram.types.StarGiftAttribute`, *optional*):
-            Information about the star gift symbol.
+        attributes (List of :obj:`~pyrogram.types.StarGiftAttribute`, *optional*):
+            Attributes of the star gift.
             For unique gifts only.
 
         date (``datetime``, *optional*):
@@ -156,9 +148,7 @@ class StarGift(Object):
         upgrade_message_id: Optional[int] = None,
         title: Optional[str] = None,
         number: Optional[int] = None,
-        model: Optional["types.StarGiftAttribute"] = None,
-        backdrop: Optional["types.StarGiftAttribute"] = None,
-        symbol: Optional["types.StarGiftAttribute"] = None,
+        attributes: Optional[List["types.StarGiftAttribute"]] = None,
         available_amount: Optional[int] = None,
         total_amount: Optional[int] = None,
         can_upgrade: Optional[bool] = None,
@@ -191,9 +181,7 @@ class StarGift(Object):
         self.upgrade_message_id = upgrade_message_id
         self.title = title
         self.number = number
-        self.model = model
-        self.backdrop = backdrop
-        self.symbol = symbol
+        self.attributes = attributes
         self.available_amount = available_amount
         self.total_amount = total_amount
         self.can_upgrade = can_upgrade
@@ -270,31 +258,16 @@ class StarGift(Object):
                 client=client
             )
         elif isinstance(user_star_gift.gift, raw.types.StarGiftUnique):
-            gift = user_star_gift.gift
-            attributes = {type(i): i for i in gift.attributes}
-
-            model = None
-            backdrop = None
-            symbol = None
-
-            for key, value in attributes.items():
-                if isinstance(key, raw.types.StarGiftAttributeModel):
-                    model = await types.StarGiftAttribute._parse(client, value)
-                elif isinstance(key, raw.types.StarGiftAttributeBackdrop):
-                    backdrop = await types.StarGiftAttribute._parse(client, value)
-                elif isinstance(key, raw.types.StarGiftAttributePattern):
-                    symbol = await types.StarGiftAttribute._parse(client, value)
-
             return StarGift(
                 id=user_star_gift.gift.id,
                 available_amount=getattr(user_star_gift.gift, "availability_issued", None),
                 total_amount=getattr(user_star_gift.gift, "availability_total", None),
                 date=utils.timestamp_to_datetime(user_star_gift.date),
-                model=model,
-                backdrop=backdrop,
-                symbol=symbol,
-                title=gift.title,
-                number=gift.num,
+                attributes=types.List(
+                    [await types.StarGiftAttribute._parse(client, attr, users) for attr in user_star_gift.gift.attributes]
+                ) or None,
+                title=user_star_gift.gift.title,
+                number=user_star_gift.gift.num,
                 is_unique=True,
                 is_name_hidden=getattr(user_star_gift, "name_hidden", None),
                 is_saved=not user_star_gift.unsaved if getattr(user_star_gift, "unsaved", None) else None,
@@ -352,21 +325,6 @@ class StarGift(Object):
                 client=client
             )
         elif isinstance(action, raw.types.MessageActionStarGiftUnique):
-            gift = action.gift
-            attributes = {type(i): i for i in gift.attributes}
-
-            model = None
-            backdrop = None
-            symbol = None
-
-            for key, value in attributes.items():
-                if isinstance(key, raw.types.StarGiftAttributeModel):
-                    model = await types.StarGiftAttribute._parse(client, value)
-                elif isinstance(key, raw.types.StarGiftAttributeBackdrop):
-                    backdrop = await types.StarGiftAttribute._parse(client, value)
-                elif isinstance(key, raw.types.StarGiftAttributePattern):
-                    symbol = await types.StarGiftAttribute._parse(client, value)
-
             return StarGift(
                 id=action.gift.id,
                 available_amount=getattr(action.gift, "availability_issued", None),
@@ -377,11 +335,11 @@ class StarGift(Object):
                 message_id=message.id,
                 caption=caption,
                 caption_entities=caption_entities,
-                title=gift.title,
-                number=gift.num,
-                model=model,
-                backdrop=backdrop,
-                symbol=symbol,
+                title=action.gift.title,
+                number=action.gift.num,
+                attributes=types.List(
+                    [await types.StarGiftAttribute._parse(client, attr, users) for attr in action.gift.attributes]
+                ) or None,
                 is_upgraded=getattr(action, "upgrade", None),
                 is_transferred=getattr(action, "transferred", None),
                 is_saved=getattr(action, "saved", None),

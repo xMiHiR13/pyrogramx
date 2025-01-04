@@ -28,6 +28,9 @@ class StarGiftAttributeType(AutoName):
 
     SYMBOL = raw.types.StarGiftAttributePattern
     "Symbol attribute"
-    
+
     BACKDROP = raw.types.StarGiftAttributeBackdrop
     "Backdrop attribute"
+
+    ORIGINAL_DETAILS = raw.types.StarGiftAttributeOriginalDetails
+    "Original details attribute"

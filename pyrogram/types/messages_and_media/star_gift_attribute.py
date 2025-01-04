@@ -31,17 +31,35 @@ class StarGiftAttribute(Object):
     """Contains information about a star gift attribute.
 
     Parameters:
-        name (``str``):
-            Name of the attribute.
-
         type (:obj:`~pyrogram.enums.StarGiftAttributeType`):
             Type of the attribute.
 
-        rarity (``int``):
+        name (``str``, *optional*):
+            Name of the attribute.
+
+        rarity (``int``, *optional*):
             Rarity of the attribute in permilles.
             For example, 15 means 1.5%. So only 1.5% of such collectibles have this attribute.
 
-        sticker (:obj:`~pyrogram.types.Sticker`):
+        date (``datetime``, *optional*):
+            Date when the gift was received.
+            Available only if the original details are available.
+
+        caption (``str``, *optional*):
+            Text message.
+            Available only if the original details are available.
+
+        caption_entities (List of :obj:`~pyrogram.types.MessageEntity`, *optional*):
+            For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text.
+            Available only if the original details are available.
+
+        from_user (:obj:`~pyrogram.types.User`, *optional*):
+            User who sent the gift.
+
+        to_user (:obj:`~pyrogram.types.User`, *optional*):
+            User who received the gift.
+
+        sticker (:obj:`~pyrogram.types.Sticker`, *optional*):
             Information about the sticker.
     """
 
@@ -49,31 +67,68 @@ class StarGiftAttribute(Object):
         self,
         *,
         client: "pyrogram.Client" = None,
-        name: str,
         type: "enums.StarGiftAttributeType",
-        rarity: int,
-        sticker: "types.Sticker",
+        name: Optional[str] = None,
+        rarity: Optional[int] = None,
+        date: Optional[datetime] = None,
+        caption: Optional[str] = None,
+        caption_entities: Optional[List["types.MessageEntity"]] = None,
+        from_user: Optional["types.User"] = None,
+        to_user: Optional["types.User"] = None,
+        sticker: Optional["types.Sticker"] = None,
     ):
         super().__init__(client)
 
         self.name = name
         self.type = type
         self.rarity = rarity
+        self.date = date
+        self.caption = caption
+        self.caption_entities = caption_entities
+        self.from_user = from_user
+        self.to_user = to_user
         self.sticker = sticker
-        # TODO: Add support for raw.types.StarGiftAttributeOriginalDetails
+
+        # TODO:
+        # self.center_color = center_color
+        # self.edge_color = edge_color
+        # self.pattern_color = pattern_color
+        # self.text_color = text_color
 
     @staticmethod
     async def _parse(
         client,
         attr: "raw.base.StarGiftAttribute",
+        users
     ) -> "StarGiftAttribute":
-        doc = attr.document
-        attributes = {type(i): i for i in doc.attributes}
+        caption = None
+        caption_entities = None
+        sticker = None
+        from_user = None
+        to_user = None
+
+        if hasattr(attr, "document"):
+            doc = attr.document
+            attributes = {type(i): i for i in doc.attributes}
+            sticker = await types.Sticker._parse(client, doc, attributes)
+
+        if isinstance(attr, raw.types.StarGiftAttributeOriginalDetails):
+            caption, caption_entities = (utils.parse_text_with_entities(
+                client, attr.message, users
+            )).values()
+
+            from_user = types.User._parse(client, users.get(attr.sender_id))
+            to_user = types.User._parse(client, users.get(attr.recipient_id))
 
         return StarGiftAttribute(
-            name=attr.name,
+            name=getattr(attr, "name", None),
             type=enums.StarGiftAttributeType(type(attr)),
-            sticker=await types.Sticker._parse(client, doc, attributes),
-            rarity=attr.rarity_permille,
+            rarity=getattr(attr, "rarity_permille", None),
+            date=utils.timestamp_to_datetime(getattr(attr, "date", None)),
+            caption=caption,
+            caption_entities=caption_entities,
+            from_user=from_user,
+            to_user=to_user,
+            sticker=sticker,
             client=client
         )
