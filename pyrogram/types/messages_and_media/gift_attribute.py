@@ -27,11 +27,11 @@ from pyrogram import utils
 from ..object import Object
 
 
-class StarGiftAttribute(Object):
+class GiftAttribute(Object):
     """Contains information about a star gift attribute.
 
     Parameters:
-        type (:obj:`~pyrogram.enums.StarGiftAttributeType`):
+        type (:obj:`~pyrogram.enums.GiftAttributeType`):
             Type of the attribute.
 
         name (``str``, *optional*):
@@ -55,19 +55,39 @@ class StarGiftAttribute(Object):
 
         from_user (:obj:`~pyrogram.types.User`, *optional*):
             User who sent the gift.
+            Available only if the original details are available.
 
         to_user (:obj:`~pyrogram.types.User`, *optional*):
             User who received the gift.
+            Available only if the original details are available.
+
+        center_color (``int``, *optional*):
+            Center color of the gift in decimal format.
+            Available only if the backdrop attribute is available.
+
+        edge_color (``int``, *optional*):
+            Edge color of the gift in decimal format.
+            Available only if the backdrop attribute is available.
+
+        pattern_color (``int``, *optional*):
+            Pattern color of the gift in decimal format.
+            Available only if the backdrop attribute is available.
+
+        text_color (``int``, *optional*):
+            Text color of the gift in decimal format.
+            Available only if the backdrop attribute is available.
 
         sticker (:obj:`~pyrogram.types.Sticker`, *optional*):
             Information about the sticker.
+
+
     """
 
     def __init__(
         self,
         *,
         client: "pyrogram.Client" = None,
-        type: "enums.StarGiftAttributeType",
+        type: "enums.GiftAttributeType",
         name: Optional[str] = None,
         rarity: Optional[int] = None,
         date: Optional[datetime] = None,
@@ -76,6 +96,10 @@ class StarGiftAttribute(Object):
         from_user: Optional["types.User"] = None,
         to_user: Optional["types.User"] = None,
         sticker: Optional["types.Sticker"] = None,
+        center_color: Optional[int] = None,
+        edge_color: Optional[int] = None,
+        pattern_color: Optional[int] = None,
+        text_color: Optional[int] = None
     ):
         super().__init__(client)
 
@@ -88,19 +112,17 @@ class StarGiftAttribute(Object):
         self.from_user = from_user
         self.to_user = to_user
         self.sticker = sticker
-
-        # TODO:
-        # self.center_color = center_color
-        # self.edge_color = edge_color
-        # self.pattern_color = pattern_color
-        # self.text_color = text_color
+        self.center_color = center_color
+        self.edge_color = edge_color
+        self.pattern_color = pattern_color
+        self.text_color = text_color
 
     @staticmethod
     async def _parse(
         client,
         attr: "raw.base.StarGiftAttribute",
         users
-    ) -> "StarGiftAttribute":
+    ) -> "GiftAttribute":
         caption = None
         caption_entities = None
         sticker = None
@@ -120,9 +142,9 @@ class StarGiftAttribute(Object):
             from_user = types.User._parse(client, users.get(attr.sender_id))
             to_user = types.User._parse(client, users.get(attr.recipient_id))
 
-        return StarGiftAttribute(
+        return GiftAttribute(
             name=getattr(attr, "name", None),
-            type=enums.StarGiftAttributeType(type(attr)),
+            type=enums.GiftAttributeType(type(attr)),
             rarity=getattr(attr, "rarity_permille", None),
             date=utils.timestamp_to_datetime(getattr(attr, "date", None)),
             caption=caption,
@@ -130,5 +152,9 @@ class StarGiftAttribute(Object):
             from_user=from_user,
             to_user=to_user,
             sticker=sticker,
+            center_color=getattr(attr, "center_color", None),
+            edge_color=getattr(attr, "edge_color", None),
+            pattern_color=getattr(attr, "pattern_color", None),
+            text_color=getattr(attr, "text_color", None),
             client=client
         )
