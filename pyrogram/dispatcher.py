@@ -27,7 +27,8 @@ from pyrogram.handlers import (
     CallbackQueryHandler, MessageHandler, EditedMessageHandler, DeletedMessagesHandler,
     UserStatusHandler, RawUpdateHandler, InlineQueryHandler, PollHandler, PreCheckoutQueryHandler,
     ChosenInlineResultHandler, ChatMemberUpdatedHandler, ChatJoinRequestHandler, StoryHandler,
-    ShippingQueryHandler, MessageReactionHandler, MessageReactionCountHandler, ChatBoostHandler, PurchasedPaidMediaHandler
+    ShippingQueryHandler, MessageReactionHandler, MessageReactionCountHandler, ChatBoostHandler,
+    PurchasedPaidMediaHandler, ErrorHandler
 )
 from pyrogram.raw.types import (
     UpdateNewMessage, UpdateNewChannelMessage, UpdateNewScheduledMessage,
@@ -329,7 +330,24 @@ class Dispatcher:
                             except pyrogram.ContinuePropagation:
                                 continue
                             except Exception as e:
-                                log.exception(e)
+                                handled_error = False
+                                for group in self.groups.values():
+                                    for handler in group:
+                                        if isinstance(handler, ErrorHandler):
+                                            try:
+                                                if await handler.check(self.client, update, e):
+                                                    handled_error = True
+                                                    break
+                                            except pyrogram.StopPropagation:
+                                                raise
+                                            except pyrogram.ContinuePropagation:
+                                                continue
+                                            except Exception as e:
+                                                log.exception(e)
+                                                continue
+
+                                if not handled_error:
+                                    log.exception(e)
 
                             break
             except pyrogram.StopPropagation:

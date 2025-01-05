@@ -24,6 +24,7 @@ from .on_chosen_inline_result import OnChosenInlineResult
 from .on_deleted_messages import OnDeletedMessages
 from .on_disconnect import OnDisconnect
 from .on_edited_message import OnEditedMessage
+from .on_error import OnError
 from .on_inline_query import OnInlineQuery
 from .on_message_reaction_count import OnMessageReactionCount
 from .on_message_reaction import OnMessageReaction
@@ -40,6 +41,7 @@ from .on_story import OnStory
 class Decorators(
     OnMessage,
     OnEditedMessage,
+    OnError,
     OnDeletedMessages,
     OnCallbackQuery,
     OnChatBoost,
