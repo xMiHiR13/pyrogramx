@@ -37,7 +37,7 @@ class OnError:
 
         def decorator(func: Callable) -> Callable:
             if isinstance(self, pyrogram.Client):
-                self.add_handler(pyrogram.handlers.OnErrorHandler(func, errors), 0)
+                self.add_handler(pyrogram.handlers.ErrorHandler(func, errors), 0)
             elif isinstance(self, Filter) or self is None:
                 if not hasattr(func, "handlers"):
                     func.handlers = []
