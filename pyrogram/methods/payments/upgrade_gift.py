@@ -36,6 +36,9 @@ class UpgradeGift:
             message_id (``int``):
                 Unique message identifier of star gift.
 
+            keep_details (``bool``):
+                Pass True if you want to keep the original details of the gift like caption.
+
         Returns:
             ``bool``: On success, True is returned.
 

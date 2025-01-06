@@ -124,9 +124,6 @@ class Gift(Object):
         is_transferred (``bool``, *optional*):
             True, if the gift was transferred.
 
-        is_unique (``bool``, *optional*):
-            True, if the gift is unique.
-
         is_birthday (``bool``, *optional*):
             True, if the gift is a birthday gift.
     """
@@ -164,7 +161,6 @@ class Gift(Object):
         is_upgraded: Optional[bool] = None,
         is_refunded: Optional[bool] = None,
         is_transferred: Optional[bool] = None,
-        is_unique: Optional[bool] = None,
         is_birthday: Optional[bool] = None
     ):
         super().__init__(client)
@@ -198,7 +194,6 @@ class Gift(Object):
         self.is_upgraded = is_upgraded
         self.is_refunded = is_refunded
         self.is_transferred = is_transferred
-        self.is_unique = is_unique
         self.is_birthday = is_birthday
 
     @staticmethod
@@ -240,7 +235,7 @@ class Gift(Object):
             ) or None,
             available_amount=getattr(star_gift, "availability_issued", None),
             total_amount=getattr(star_gift, "availability_total", None),
-            is_unique=True,
+            is_upgraded=True,
             client=client
         )
 
