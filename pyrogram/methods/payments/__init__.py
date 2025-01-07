@@ -20,6 +20,7 @@ from .apply_gift_code import ApplyGiftCode
 from .check_gift_code import CheckGiftCode
 from .convert_gift import ConvertGift
 from .get_payment_form import GetPaymentForm
+from .get_stars_balance import GetStarsBalance
 from .get_available_gifts import GetAvailableGifts
 from .get_user_gifts_count import GetUserGiftsCount
 from .get_user_gifts import GetUserGifts
@@ -35,6 +36,7 @@ class Payments(
     CheckGiftCode,
     ConvertGift,
     GetPaymentForm,
+    GetStarsBalance,
     GetAvailableGifts,
     GetUserGiftsCount,
     GetUserGifts,

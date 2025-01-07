@@ -337,6 +337,7 @@ def pyrogram_api():
             show_gift
             transfer_gift
             upgrade_gift
+            get_stars_balance
         """,
         phone="""
         Phone
