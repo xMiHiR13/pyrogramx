@@ -517,6 +517,7 @@ def pyrogram_api():
             FoundContacts
             PrivacyRule
             StoriesStealthMode
+            BotVerification
         """,
         messages_media="""
         Messages & Media
