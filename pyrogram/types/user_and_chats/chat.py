@@ -561,6 +561,11 @@ class Chat(Object):
             parsed_chat.business_intro = await types.BusinessIntro._parse(client, getattr(full_user, "business_intro", None))
             parsed_chat.birthday = types.Birthday._parse(getattr(full_user, "birthday", None))
             parsed_chat.gifts_count = getattr(full_user, "stargifts_count", None)
+            parsed_chat.bot_verification = types.BotVerification._parse(
+                client,
+                getattr(full_user, "bot_verification", None),
+                users
+            )
             parsed_chat.raw = full_user
 
             if full_user.pinned_msg_id:
