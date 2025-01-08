@@ -26,7 +26,7 @@ class GetStarsBalance:
     async def get_stars_balance(
         self: "pyrogram.Client",
         chat_id: Optional[Union[int, str]] = None,
-    ) -> bool:
+    ) -> int:
         """Get the current Telegram Stars balance of the current account.
 
         .. include:: /_includes/usable-by/users.rst
