@@ -104,6 +104,9 @@ class TCP:
                 raise OSError(e)
 
     async def recv(self, length: int = 0):
+        if not self.reader:
+            return None
+
         data = b""
 
         while len(data) < length:
