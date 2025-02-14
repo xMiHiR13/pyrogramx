@@ -52,7 +52,8 @@ class TCP:
         self.reader: Optional[asyncio.StreamReader] = None
         self.writer: Optional[asyncio.StreamWriter] = None
 
-        self.lock = asyncio.Lock()
+        self.read_lock = asyncio.Lock()
+        self.write_lock = asyncio.Lock()
         self.loop = asyncio.get_event_loop()
 
     async def _connect_via_proxy(
@@ -138,7 +139,7 @@ class TCP:
         if self.writer is None:
             return None
 
-        async with self.lock:
+        async with self.write_lock:
             try:
                 self.writer.write(data)
                 await self.writer.drain()
@@ -147,20 +148,24 @@ class TCP:
                 raise OSError(e)
 
     async def recv(self, length: int = 0) -> Optional[bytes]:
-        data = b""
+        if not self.reader:
+            return None
 
-        while len(data) < length:
-            try:
-                chunk = await asyncio.wait_for(
-                    self.reader.read(length - len(data)),
-                    TCP.TIMEOUT
-                )
-            except (OSError, asyncio.TimeoutError):
-                return None
-            else:
-                if chunk:
-                    data += chunk
-                else:
+        async with self.read_lock:
+            data = b""
+
+            while len(data) < length:
+                try:
+                    chunk = await asyncio.wait_for(
+                        self.reader.read(length - len(data)),
+                        TCP.TIMEOUT
+                    )
+                except (OSError, asyncio.TimeoutError):
                     return None
+                else:
+                    if chunk:
+                        data += chunk
+                    else:
+                        return None
 
-        return data
+            return data
